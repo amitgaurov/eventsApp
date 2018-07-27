@@ -1,0 +1,50 @@
+<h3>Add a Event</h3>   
+<%= form_for(@event) do |f| %>
+    
+    <div>   
+      <%= f.hidden_field :user_id, value: "#{@users}" %>   
+    </div>   
+
+    <div>   
+      <label>Select User</label>   
+        <%=f.collection_select :user_id, User.all, :id,:name%>
+      </div> 
+
+    <div>   
+     <label>place</label>   
+      <%=f.collection_select :place, Country.all, :ioc,:name%>
+    </div>   
+   <div>
+     <label>Select Date/Time</label>  
+  <%= f.datetime_select :date, placeholder: 'mm/dd/yyyy', :id => "datepicker"%>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+              alert("hello");
+             $('#datepicker').datepicker();
+          });
+        </script>
+
+   </div>
+
+
+   <span class="picture">
+      <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+   </span>
+
+
+    <script type="text/javascript">
+      $('#micropost_picture').bind('change', function() {
+        var size_in_megabytes = this.files[0].size/1024/1024;
+        if (size_in_megabytes > 5) {
+          alert('Maximum file size is 5MB. Please choose a smaller file.');
+        }
+      });
+    </script>
+    
+    </div>   
+    <div>   
+      <%= link_to 'Back', { controller: 'events', action: 'index'} %>   
+      <%= f.submit 'Create events' %>   
+    </div>   
+<% end %>   
